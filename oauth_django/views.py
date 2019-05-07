@@ -6,6 +6,9 @@ from django.shortcuts import render
 from .models import Mensaje
 from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
+from rest_framework import viewsets
+from . import serializers
+from django.contrib.auth import models
 
 
 def index(request):
@@ -20,3 +23,7 @@ def index(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect("/")
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer

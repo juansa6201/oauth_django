@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'oauth_django',
     'social_django',
+    'oauth2_provider',
 ]
 
 MIDDLEWARE = [
@@ -125,11 +126,36 @@ LOGIN_URL = '/auth/login/google-oauth2/'
 
 LOGIN_REDIRECT_URL = '/'
 
+OAUTH2_PROVIDER = {
+    # this is the list of available scopes
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+}
 
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='your_key'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'your_secret'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='246477987916-97olebrvqhp82rki0n5h17u679m4tmpi.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '0-8hCK2e3lv6M9XtF-JovAmu'
+
+SOCIAL_AUTH_GITHUB_KEY = 'd049e04f1ffc609ce06c'
+SOCIAL_AUTH_GITHUB_SECRET = 'd96e64c947c288dc9434a69b9c4e37382bff8646'
+
+SOCIAL_AUTH_TWITTER_KEY = '9TD12xahCWCDdyLzpmw61GSM9'
+SOCIAL_AUTH_TWITTER_SECRET = 'mwtdcUe4uOvvJjDk2AuQ9Mq2xiHPw3740m5iGLf6hwg3B4TNSx'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '609824229504579'
+SOCIAL_AUTH_FACEBOOK_SECRET = '5fb733793d0f868cfaaa2b882de7ca6e'  # App Secret
